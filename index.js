@@ -29,12 +29,12 @@ app.use(cookieParser());
 //     allowedHeaders: ["Content-Type", "Authorization"]
 // }));
 
-app.use(cors({
-    origin: "https://hi-coding-junction.netlify.app",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
+// app.use(cors({
+//     origin: "https://hi-coding-junction.netlify.app",
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"]
+// }));
 
 // app.use(cors({
 //     origin: "http://localhost:5173",
@@ -53,6 +53,14 @@ app.use("/api/review", reviewRouter);
 app.get("/", (req, res) => {
     res.send("Hello From Server");
 });
+
+
+app.use(cors({
+    origin: "https://hi-coding-junction.netlify.app",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 /* ✅ START SERVER ONLY AFTER DB CONNECT */
 const startServer = async() => {
