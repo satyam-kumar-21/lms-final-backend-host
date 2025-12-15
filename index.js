@@ -25,7 +25,7 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-app.options("*", cors());
+
 
 // app.use(cors({
 //     origin: "http://localhost:5173",
