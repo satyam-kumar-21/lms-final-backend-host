@@ -16,8 +16,8 @@ let app = express()
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true
+    origin: "https://hi-coding-junction.netlify.app",
+    credentials: true
 }))
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
@@ -27,12 +27,11 @@ app.use("/api/ai", aiRouter)
 app.use("/api/review", reviewRouter)
 
 
-app.get("/" , (req,res)=>{
+app.get("/", (req, res) => {
     res.send("Hello From Server")
 })
 
-app.listen(port , ()=>{
+app.listen(port, () => {
     console.log("Server Started")
     connectDb()
 })
-
