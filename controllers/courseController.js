@@ -1,4 +1,5 @@
 import uploadOnCloudinary from "../configs/cloudinary.js"
+import { v2 as cloudinary } from 'cloudinary';
 import Course from "../models/courseModel.js"
 import Lecture from "../models/lectureModel.js"
 import User from "../models/userModel.js"
@@ -192,12 +193,37 @@ export const editLecture = async(req, res) => {
         if (lectureTitle) lecture.lectureTitle = lectureTitle;
         lecture.isPreviewFree = isPreviewFree;
 
+        // ✅ Support direct URL from frontend (Client-Side Upload)
+        if (req.body.videoUrl) {
+            lecture.videoUrl = req.body.videoUrl;
+        }
+
         await lecture.save();
         return res.status(200).json(lecture);
 
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: `Failed to edit lecture: ${error.message}` });
+    }
+};
+
+export const getUploadSignature = async(req, res) => {
+    try {
+        const timestamp = Math.round((new Date).getTime() / 1000);
+        const signature = cloudinary.utils.api_sign_request({
+            timestamp: timestamp,
+            folder: 'courses'
+        }, process.env.CLOUDINARY_API_SECRET);
+
+        res.status(200).json({
+            signature,
+            timestamp,
+            cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+            api_key: process.env.CLOUDINARY_API_KEY
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Failed to generate signature" });
     }
 };
 
