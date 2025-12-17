@@ -185,7 +185,7 @@ export const editLecture = async(req, res) => {
 
         // ✅ Upload video if present
         if (req.file) {
-            const videoUrl = await uploadOnCloudinary(req.file.buffer, req.file.originalname);
+            const videoUrl = await uploadOnCloudinary(req.file.path);
             lecture.videoUrl = videoUrl;
         }
 
