@@ -25,15 +25,15 @@ app.use(cookieParser());
 //     allowedHeaders: ["Content-Type", "Authorization"]
 // }));
 
-app.use(cors({
-    origin: "https://hi-coding-junction.netlify.app",
-    credentials: true
-}));
-
 // app.use(cors({
-//     origin: "http://localhost:5173",
-//     credentials: true,
+//     origin: "https://hi-coding-junction.netlify.app",
+//     credentials: true
 // }));
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}));
 
 
 
