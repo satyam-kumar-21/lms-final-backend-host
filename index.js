@@ -35,26 +35,28 @@ app.use(cookieParser());
 //     credentials: true,
 // }));
 
+app.use(cors({ origin: "*", credentials: true }));
 
-const allowedOrigins = [
-    "http://localhost:5173",
-    "https://hi-coding-junction.netlify.app"
-];
 
-app.use(cors({
-    origin: function(origin, callback) {
-        // origin null hota hai jab Postman ya server request hoti hai
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.log("Blocked CORS request from:", origin);
-            callback(new Error("CORS blocked"));
-        }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
+// const allowedOrigins = [
+//     "http://localhost:5173",
+//     "https://hi-coding-junction.netlify.app"
+// ];
+
+// app.use(cors({
+//     origin: function(origin, callback) {
+//         // origin null hota hai jab Postman ya server request hoti hai
+//         if (!origin || allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             console.log("Blocked CORS request from:", origin);
+//             callback(new Error("CORS blocked"));
+//         }
+//     },
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"]
+// }));
 // app.use(cors({
 //     origin: [
 //         "http://localhost:5173",
