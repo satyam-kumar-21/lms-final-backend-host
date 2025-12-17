@@ -15,8 +15,8 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(express.json());
-app.use(cookieParser());
+// app.use(express.json());
+// app.use(cookieParser());
 
 // app.use(cors({
 //     origin: "http://localhost:5173",
@@ -35,26 +35,20 @@ app.use(cookieParser());
 //     credentials: true,
 // }));
 
-
 const allowedOrigins = [
     "http://localhost:5173",
     "https://hi-coding-junction.netlify.app"
 ];
 
 app.use(cors({
-    origin: function(origin, callback) {
-        // origin null hota hai jab Postman ya server request hoti hai
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.log("Blocked CORS request from:", origin);
-            callback(new Error("CORS blocked"));
-        }
-    },
+    origin: allowedOrigins,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+app.options(/.*/, cors()); // ✅ FIXED
+
 // app.use(cors({
 //     origin: [
 //         "http://localhost:5173",
@@ -67,6 +61,11 @@ app.use(cors({
 
 // app.options("*", cors());
 
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
