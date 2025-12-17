@@ -40,14 +40,20 @@ const allowedOrigins = [
     "https://hi-coding-junction.netlify.app"
 ];
 
-app.use(cors({
-    origin: allowedOrigins,
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
-}));
+};
 
-app.options(/.*/, cors()); // ✅ FIXED
+app.use(cors(corsOptions));
 
 // app.use(cors({
 //     origin: [
