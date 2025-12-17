@@ -37,16 +37,17 @@ app.use(cookieParser());
 
 
 const allowedOrigins = [
-    "http://localhost:5173", // Local frontend
-    "https://hi-coding-junction.netlify.app" // Production frontend
+    "http://localhost:5173",
+    "https://hi-coding-junction.netlify.app"
 ];
 
 app.use(cors({
     origin: function(origin, callback) {
-        if (!origin) return callback(null, true); // Postman / server requests
-        if (allowedOrigins.includes(origin)) {
+        // origin null hota hai jab Postman ya server request hoti hai
+        if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
+            console.log("Blocked CORS request from:", origin);
             callback(new Error("CORS blocked"));
         }
     },
@@ -54,9 +55,6 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
-
-// Preflight requests
-app.options("*", cors());
 // app.use(cors({
 //     origin: [
 //         "http://localhost:5173",
