@@ -30,11 +30,29 @@ app.use(cookieParser());
 //     credentials: true
 // }));
 
+// app.use(cors({
+//     origin: "http://localhost:5173",
+//     credentials: true,
+// }));
+
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://hi-coding-junction.netlify.app"
+];
+
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: function(origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
+app.options("*", cors());
 
 
 app.use("/api/auth", authRouter);
